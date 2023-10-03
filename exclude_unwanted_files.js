@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-fs.readFile(`${process.env.GITHUB_REPOSITORY}/abaplint.json`, 'utf8', (err, data) => {
+fs.readFile(`abaplint.json`, 'utf8', (err, data) => {
   if (err) {
     console.error(err);
     return;
@@ -13,7 +13,7 @@ fs.readFile(`${process.env.GITHUB_REPOSITORY}/abaplint.json`, 'utf8', (err, data
 
     config.global.exclude = filesToExclude; 
     const modifiedConfig = JSON.stringify(config, null, 2);
-    fs.writeFile('/abaplint.json', modifiedConfig, 'utf8', (err) => {
+    fs.writeFile('abaplint.json', modifiedConfig, 'utf8', (err) => {
       if (err) {
         console.error(err);
         return;
