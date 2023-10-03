@@ -10,8 +10,8 @@ fs.readFile(`abaplint.json`, 'utf8', (err, data) => {
     const config = JSON.parse(data);
     const filesToExclude = allfiles.filter(file => !process.env.CHANGEDFILES.includes(file));
     console.log(filesToExclude)
-    const array = filesToExclude.split(/\s+/);
-    console.log(array)
+    const filesToExcludeArray = filesToExclude.map(file => `"${file}"`);
+    console.log(filesToExcludeArray)
     config.global.exclude = array; 
     const modifiedConfig = JSON.stringify(config, null, 2);
     fs.writeFile('abaplint.json', modifiedConfig, 'utf8', (err) => {
