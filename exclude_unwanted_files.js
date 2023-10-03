@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-fs.readFile('/abaplint.json', 'utf8', (err, data) => {
+fs.readFile('\abaplint.json', 'utf8', (err, data) => {
   if (err) {
     console.error(err);
     return;
