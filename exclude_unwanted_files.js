@@ -5,13 +5,14 @@ fs.readFile(`abaplint.json`, 'utf8', (err, data) => {
     console.error(err);
     return;
   }
-  const arr = process.env.ALLFILES.split(/\r?\n/);
+  const allfiles = process.env.ALLFILES.split(/\r?\n/);
   try {  
     const config = JSON.parse(data);
-    const filesToExclude = arr.filter(file => !process.env.CHANGEDFILES.includes(file));
+    const filesToExclude = allfiles.filter(file => !process.env.CHANGEDFILES.includes(file));
     console.log(filesToExclude)
-
-    config.global.exclude = filesToExclude; 
+    const array = filesToExclude.split(/\s+/);
+    console.log(array)
+    config.global.exclude = array; 
     const modifiedConfig = JSON.stringify(config, null, 2);
     fs.writeFile('abaplint.json', modifiedConfig, 'utf8', (err) => {
       if (err) {
