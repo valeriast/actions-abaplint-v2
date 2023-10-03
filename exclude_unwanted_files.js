@@ -1,18 +1,14 @@
 const fs = require('fs');
-const allfiles = []
 
 fs.readFile(`abaplint.json`, 'utf8', (err, data) => {
   if (err) {
     console.error(err);
     return;
   }
-
+  const arr = process.env.ALLFILES.split(/\r?\n/);
   try {  
     const config = JSON.parse(data);
-    for(let file of process.env.ALLFILES) {
-      allfiles.push(file)
-    }
-    const filesToExclude = allfiles.filter(file => !process.env.CHANGEDFILES.includes(file));
+    const filesToExclude = arr.filter(file => !process.env.CHANGEDFILES.includes(file));
     console.log(filesToExclude)
 
     config.global.exclude = filesToExclude; 
