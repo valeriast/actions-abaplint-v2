@@ -8,7 +8,8 @@ fs.readFile(`abaplint.json`, 'utf8', (err, data) => {
 
   try {  
     const config = JSON.parse(data);
-    const filesToExclude = process.env.ALLFILES.filter(file => !process.env.CHANGEDFILES.includes(file));
+    const allfiles = process.env.ALLFILES.split(/\r?\n/);
+    const filesToExclude = allfiles.filter(file => !process.env.CHANGEDFILES.includes(file));
     console.log(filesToExclude)
 
     config.global.exclude = filesToExclude; 
