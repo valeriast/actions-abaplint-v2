@@ -27,7 +27,8 @@ const { execSync } = require('child_process');
 
 async function run() {
     try {
-   
+
+        execSync('echo ${{process.env.CHANGEDFILES}} > pull_request_files.txt')
         execSync('git ls-files > all_files.txt');
         execSync('grep -Fvxf pull_request_files.txt all_files.txt > non_pull_request_files.txt');
 

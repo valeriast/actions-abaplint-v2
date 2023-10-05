@@ -35,6 +35,16 @@ function buildSummary() {
     "For additional features, faster feedback, and support use [abaplint.app](https://abaplint.app)";
 }
 
+function findJobIdByWorkflowName(data, workflowName) {
+  const jobs = data.jobs;
+  for (const job of jobs) {
+    if (job.workflow_name === workflowName) {
+      return job.id;
+    }
+  }
+  return null;
+}
+
 async function run() {
   const batchSize = 50; // Github actions limits 50 annotations per API call
   let annotations = buildAnnotations();
@@ -46,7 +56,7 @@ async function run() {
   });
 
   const repo = process.env.GITHUB_REPOSITORY.split("/");
-  checkrunid = process.env.GITHUB_CHECK_ID
+  checkrunid = findJobIdByWorkflowName(process.env.GITHUB_CHECK_RUN_ID, 'Abaplint');
   
   for(let i = 0; i < annotations.length; i += batchSize) {    
       const batch = annotations.slice(i, i + batchSize)
